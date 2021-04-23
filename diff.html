@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Document</title>
+<style>
+   body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+   }
+   .result {
+      font-size: 18px;
+      font-weight: 500;
+      color: blueviolet;
+   }
+   button {
+      padding: 6px;
+      margin: 4px;
+   }
+</style>
+</head>
+<body>
+<h1>Difference and Multiplication</h1>
+<div class="result"></div>
+<br />
+<input type="text" class="enqueueVal" /><button class="enqueueBtn">
+Enqueue
+</button>
+<button class="dequeueBtn">Dequeue</button>
+<button class="Btn">Display</button>
+<button class="diffBtn">Difference</button>
+<button class="mulBtn">Multiplication</button>
+<script>
+   let resEle = document.querySelector(".result");
+   let BtnEle = document.querySelector(".Btn");
+   let enqueueBtnEle = document.querySelector(".enqueueBtn");
+   let dequeueBtnEle = document.querySelector(".dequeueBtn");
+   let diffBtnEle = document.querySelector(".diffBtn");
+   let mulBtnEle = document.querySelector(".mulBtn");
+   class Queue {
+      constructor() {
+         this.items = [];
+         this.length = 0;
+		 this.rear=-1;
+		 this.front=-1;
+      }
+   }
+   Queue.prototype.enqueue = function (ele) {
+   if(this.length<=4)
+   {
+   if(this.rear==-1)
+   {
+      this.front=0;
+	  this.rear=0;
+      this.items[this.rear] = ele;
+      this.length += 1;
+	  return ele +"is enqueued to the queue at front= " +this.front+" and rear= "+this.rear;
+   }
+   else{
+      this.rear=this.rear+1;
+      this.items[this.rear] = ele;
+	  
+      this.length += 1;
+	  
+	  return ele +"is enqueued to the queue at front= " +this.front+" and rear= "+this.rear;
+	  }
+	  }
+	  else
+	  {
+	     return "Overflow condition";
+	  }
+   };
+   Queue.prototype.dequeue = function () {
+     
+      if (this.front==-1) {
+         return "Underflow: no more elements to remove";
+      }
+	  else if(this.front==this.rear)
+	  {
+	    let tempNum = this.items[this.front];
+		
+	   this.front=-1;
+	   this.rear=-1;
+	   this.length=0;
+	   this.items=[];
+	   return tempNum + " is the element Deleted and now front is " +this.front+" and rear is " + this.rear + " and length is "+this.length+ " and array is empty"+ this.items;
+		
+	  }
+	  else{
+	  let tempNum = this.items[this.front];
+      this.front=this.front+1;
+	  return tempNum + " is the element Deleted and now front is " +this.front+" and rear is " + this.rear;
+	   
+	  }
+   };
+   
+   Queue.prototype.diff=function()
+   {   let diff=this.items[this.front]-this.items[this.rear];
+       return "Difference in first and last element is: " + diff;
+   };
+   
+   Queue.prototype.mul=function()
+   {   let mul=this.items[this.front]*this.items[this.rear];
+       return "Multiplication first and last element is:" + mul;
+   };
+   
+   
+   Queue.prototype.display = function () {
+      
+      if (this.front==-1) {
+         return "Queue is empty";
+      }
+      for (let i = this.front; i < this.length; i++) {
+         resEle.innerHTML += this.items[i] + " , ";
+      }
+   };
+   let queue1 = new Queue();
+   BtnEle.addEventListener("click", () => {
+      resEle.innerHTML = "";
+      queue1.display();
+   });
+   enqueueBtnEle.addEventListener("click", () => {
+      let ele = document.querySelector(".enqueueVal").value;
+      resEle.innerHTML = queue1.enqueue(ele);
+   });
+   dequeueBtnEle.addEventListener("click", () => {
+      resEle.innerHTML =queue1.dequeue();
+   });
+   
+   diffBtnEle.addEventListener("click", () => {
+      resEle.innerHTML =queue1.diff();
+   });
+   
+   mulBtnEle.addEventListener("click", () => {
+      resEle.innerHTML =queue1.mul();
+   });
+   
+</script>
+</body>
+</html>

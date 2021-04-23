@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<title>Document</title>
+<style>
+   body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+   }
+   .result {
+      font-size: 18px;
+      font-weight: 500;
+      color: blueviolet;
+   }
+   button {
+      padding: 6px;
+      margin: 4px;
+   }
+</style>
+</head>
+<body>
+<h1>Maximum frequency element</h1>
+<div class="result"></div>
+<br />
+<input type="text" class="stackPush" />
+<button class="pushBtn">Push</button>
+<button class="popBtn">Pop</button>
+<button class="Btn">Display</button>
+<button class="maxBtn">Maximum Frequency</button>
+<script>
+   let resEle = document.querySelector(".result");
+   let BtnEle = document.querySelector(".Btn");
+   let pushBtnEle = document.querySelector(".pushBtn");
+   let popBtnEle = document.querySelector(".popBtn");
+   let maxBtnEle = document.querySelector(".maxBtn");
+   class Stack {
+      constructor() {
+         this.items = [];
+         this.top = -1;
+		 this.length=0;
+      }
+   }
+   Stack.prototype.push = function (ele) {
+      if(this.length<=4){
+	   
+	  this.items[this.top] = ele;
+     this.top = this.top+1;
+	  this.length=this.length+1;
+	  return ele +"is pushed to the stack at location"+ this.length + "and index is"+this.top;
+	  }
+	  else
+	  {
+	  return "Overflow condition";
+	  }
+   };
+   Stack.prototype.pop = function () {
+      if (this.top == -1) {
+         return "Underflow: no more elements to delete";
+      }
+	  else{
+    	 let tempNum = this.items[this.top];
+      this.top = this.top-1;
+	 this.length=this.length-1;
+      return "Popped element";
+	  }
+   };
+   Stack.prototype.display = function () {
+      if (this.top == -1) {
+         return "Stack is empty";
+      }
+      for (let i = -1; i < this.top; i++) {
+         resEle.innerHTML += this.items[i]+"";
+      }
+   };
+   Stack.prototype.maxfreq=function()
+   {
+           
+   var mf = 1; //default maximum frequency
+   var m = 0;  //counter
+   var item;  //to store item with maximum frequency
+    for (var i=0; i<this.length; i++)    //select element (current element)
+    {
+        for (var j=i; j<this.length; j++)   //loop through next elements in array to compare calculate frequency of current element
+        {
+                if (this.items[i] == this.items[j])    //see if element occurs again in the array
+                 m++;   //increment counter if it does
+                if (mf<m)   //compare current items frequency with maximum frequency
+                {
+                  mf=m;      //if m>mf store m in mf for upcoming elements
+                  item = this.items[i];   // store the current element.
+                }
+        }
+        m=0;   // make counter 0 for next element.
+		
+     }
+         return item;
+   };
+   
+   let stack1 = new Stack();
+   BtnEle.addEventListener("click", () => {
+      resEle.innerHTML = "";
+      stack1.display();
+   });
+   pushBtnEle.addEventListener("click", () => {
+      let ele = document.querySelector(".stackPush").value;
+      resEle.innerHTML = stack1.push(ele);
+   });
+   popBtnEle.addEventListener("click", () => {
+      resEle.innerHTML = stack1.pop();
+   });
+   
+   maxBtnEle.addEventListener("click", () => {
+      resEle.innerHTML = stack1.maxfreq();
+   });
+</script>
+</body>
+</html>

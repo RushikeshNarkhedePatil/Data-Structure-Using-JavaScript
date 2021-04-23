@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<title>Document</title>
+<style>
+   body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+   }
+   .result {
+      font-size: 18px;
+      font-weight: 500;
+      color: blueviolet;
+   }
+   button {
+      padding: 6px;
+      margin: 4px;
+   }
+</style>
+</head>
+<body>
+<h1>Divide stack</h1>
+<div class="result"></div>
+<div class="result1"></div>
+<br />
+<input type="text" class="stackPush" />
+<button class="pushBtn">Push</button>
+<button class="popBtn">Pop</button>
+<button class="Btn">Display</button>
+<button class="dvBtn">Divide</button>
+<script>
+   let resEle = document.querySelector(".result");
+   let res1Ele = document.querySelector(".result1");
+   let BtnEle = document.querySelector(".Btn");
+   let pushBtnEle = document.querySelector(".pushBtn");
+
+   let popBtnEle = document.querySelector(".popBtn");
+   let dvBtnEle = document.querySelector(".dvBtn");
+   class Stack {
+      constructor() {
+         this.items = [];
+         this.top = -1;
+		 this.length=0;
+		 this.stackfirst=[];
+		 this.stacksecond=[];
+      }
+   }
+   Stack.prototype.push = function (ele) {
+      if(this.length<=4){
+	   this.top = this.top+1;
+	  this.items[this.top] = ele;
+     
+	  this.length=this.length+1;
+	  return ele +"is pushed to the stack at location"+ this.length + "and index is"+this.top;
+	  }
+	  else
+	  {
+	  return "Overflow condition";
+	  }
+   };
+   Stack.prototype.pop = function () {
+      if (this.top == -1) {
+         return "Underflow: no more elements to delete";
+      }
+	  else{
+    	 let tempNum = this.items[this.top];
+      this.top = this.top-1;
+	 this.length=this.length-1;
+      return "Popped element";
+	  }
+  };
+   
+   Stack.prototype.divide=function(){
+     let mid= this.top/2;
+	 for (let k = 0; k < mid; k++) {
+	     this.stackfirst[k]=this.items[k];
+         resEle.innerHTML += this.stackfirst[k]+"";
+      }
+	 
+	 
+
+	 for (let j = mid; j <= this.top; j++) {
+	         this.stacksecond[j]=this.items[j];
+         res1Ele.innerHTML += this.stacksecond[j]+"";
+      }
+	
+   
+   };
+   
+   
+  
+   
+   Stack.prototype.display = function () {
+      if (this.top == -1) {
+         return "Stack is empty";
+      }
+      for (let i = 0; i <= this.top; i++) {
+         resEle.innerHTML += this.items[i]+"";
+      }
+   };
+   let stack1 = new Stack();
+   BtnEle.addEventListener("click", () => {
+      resEle.innerHTML = "";
+      stack1.display();
+   });
+   pushBtnEle.addEventListener("click", () => {
+      let ele = document.querySelector(".stackPush").value;
+      resEle.innerHTML = stack1.push(ele);
+   });
+   popBtnEle.addEventListener("click", () => {
+      resEle.innerHTML = stack1.pop();
+   });
+   
+   dvBtnEle.addEventListener("click", () => {
+      resEle.innerHTML = "";
+	  stack1.divide();
+   });
+   
+</script>
+</body>
+</html>
